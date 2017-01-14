@@ -24,16 +24,16 @@ public class TransactionEventConsumer {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
         consumer.subscribe(Arrays.asList("transactions"));
-        MerchantCashbackDataStore cashbackStore = new MerchantCashbackDataStore();
+        DataStore dataStore = new DataStore();
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records) {
                 Transaction transaction = new JacksonReadingSerializer(new ObjectMapper())
                         .deserialize("", record.value().getBytes());
                 System.out.printf("offset = %d, merchantId = %s, amount = %s\n", record.offset(),
-                        transaction.getMerchantId(), transaction.getAmount());
-
-                cashbackStore.update(transaction.getMerchantId(), 10);
+                        transaction.getMerchantName(), transaction.getAmount());
+                dataStore.addTransaction(transaction);
+                dataStore.updateMerchantCashback(transaction.getMerchantName(), 10);
             }
         }
     }

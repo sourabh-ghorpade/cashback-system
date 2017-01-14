@@ -4,6 +4,9 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Property;
+import org.mongodb.morphia.annotations.Reference;
+
+import java.util.List;
 
 @Entity("payments_merchants")
 public class Merchant {
@@ -18,7 +21,8 @@ public class Merchant {
     private String name;
     @Property
     private float cashbackPercentage;
-
+    @Reference
+    private List<Transaction> transactions;
 
     public ObjectId getId() {
         return id;
@@ -44,4 +48,11 @@ public class Merchant {
         this.cashbackPercentage = cashbackPercentage;
     }
 
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 }
