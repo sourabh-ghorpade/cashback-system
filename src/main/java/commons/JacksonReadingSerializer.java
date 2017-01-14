@@ -59,8 +59,8 @@ public class JacksonReadingSerializer implements Closeable, AutoCloseable, Seria
 
         public static SerializationHelper from(Transaction reading) {
             SerializationHelper helper = new SerializationHelper();
-            helper.merchantId = reading.merchantId;
-            helper.amount = reading.amount;
+            helper.merchantId = reading.getMerchantId();
+            helper.amount = reading.getAmount();
 
             return helper;
         }
