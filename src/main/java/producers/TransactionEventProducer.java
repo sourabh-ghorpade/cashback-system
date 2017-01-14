@@ -24,7 +24,7 @@ public class TransactionEventProducer {
         System.out.println("Producing");
         for (int i = 0; i < 100; i++) {
             System.out.println("Producing with amount" + i);
-            Transaction transaction = new Transaction(1, i);
+            Transaction transaction = new Transaction("Supermans Juice Counter", i);
             byte[] serialize = new JacksonReadingSerializer(new ObjectMapper()).serialize("", transaction);
             producer.send(new ProducerRecord<>("transactions", new String(serialize)));
         }

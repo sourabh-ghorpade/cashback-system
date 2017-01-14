@@ -1,15 +1,15 @@
 package commons;
 
 public class Transaction  {
-    public Transaction(int merchantId, int amount){
+    public Transaction(String merchantId, int amount){
         this.merchantId = merchantId;
         this.amount = amount;
     }
 
-    private int merchantId;
+    private String merchantId;
     private int amount;
 
-    public int getMerchantId() {
+    public String getMerchantId() {
         return merchantId;
     }
 

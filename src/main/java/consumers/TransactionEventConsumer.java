@@ -32,6 +32,7 @@ public class TransactionEventConsumer {
                         .deserialize("", record.value().getBytes());
                 System.out.printf("offset = %d, merchantId = %s, amount = %s\n", record.offset(),
                         transaction.getMerchantId(), transaction.getAmount());
+
                 cashbackStore.update(transaction.getMerchantId(), 10);
             }
         }
