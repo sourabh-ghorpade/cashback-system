@@ -30,9 +30,9 @@ public class TransactionEventConsumer {
             for (ConsumerRecord<String, String> record : records) {
                 Transaction transaction = new JacksonReadingSerializer(new ObjectMapper())
                         .deserialize("", record.value().getBytes());
-                System.out.printf("offset = %d, merchantId = %s, amount = %s\n", record.offset(),
-                        transaction.getMerchantName(), transaction.getAmount());
+                System.out.printf("merchantId = %s, amount = %s\n", transaction.getMerchantName(), transaction.getAmount());
                 dataStore.addTransaction(transaction);
+                new OrdersIncreasedCashbackStrategy(transaction.getMerchantName()).perform();
                 dataStore.updateMerchantCashback(transaction.getMerchantName(), 10);
             }
         }

@@ -5,11 +5,14 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Property;
 
+import java.util.Date;
+
 @Entity("payments_transactions")
 public class Transaction  {
     public Transaction(){}
-    public Transaction(String merchantName, int amount){
+    public Transaction(String merchantName, Date transactedAt, int amount){
         this.merchantName = merchantName;
+        this.transactedAt = transactedAt;
         this.amount = amount;
     }
     @Id
@@ -18,6 +21,8 @@ public class Transaction  {
     private String merchantName;
     @Property
     private int amount;
+    @Property
+    private Date transactedAt;
 
     public String getMerchantName() {
         return merchantName;
@@ -33,5 +38,13 @@ public class Transaction  {
 
     public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    public Date getTransactedAt() {
+        return transactedAt;
+    }
+
+    public void setTransactedAt(Date transactedAt) {
+        this.transactedAt = transactedAt;
     }
 }

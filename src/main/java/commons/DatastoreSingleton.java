@@ -6,7 +6,7 @@ import org.mongodb.morphia.Morphia;
 /**
  * Created by apple on 14/01/17.
  */
-public class Datastore {
+public class DatastoreSingleton {
 
     private static org.mongodb.morphia.Datastore datastore;
 

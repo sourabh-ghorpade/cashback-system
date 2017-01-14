@@ -1,5 +1,6 @@
 package consumers;
 
+import commons.DatastoreSingleton;
 import commons.Merchant;
 import commons.Transaction;
 
@@ -15,13 +16,13 @@ public class DataStore {
     }
 
     public void addTransaction(Transaction transaction) {
-        commons.Datastore.getInstance().save(transaction);
+        DatastoreSingleton.getInstance().save(transaction);
         Merchant merchant = getMerchant(transaction.getMerchantName());
         merchant.getTransactions().add(transaction);
-        commons.Datastore.getInstance().save(merchant);
+        DatastoreSingleton.getInstance().save(merchant);
     }
 
     public Merchant getMerchant(String merchantName) {
-        return commons.Datastore.getInstance().find(Merchant.class).field("name").equal(merchantName).get();
+        return DatastoreSingleton.getInstance().find(Merchant.class).field("name").equal(merchantName).get();
     }
 }

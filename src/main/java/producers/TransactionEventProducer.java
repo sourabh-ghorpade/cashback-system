@@ -9,6 +9,7 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Properties;
 
 public class TransactionEventProducer {
@@ -24,7 +25,7 @@ public class TransactionEventProducer {
         System.out.println("Producing");
         for (int i = 0; i < 100; i++) {
             System.out.println("Producing with amount" + i);
-            Transaction transaction = new Transaction("Supermans Juice Counter", i);
+            Transaction transaction = new Transaction("Supermans Juice Counter", new Date(), i);
             byte[] serialize = new JacksonReadingSerializer(new ObjectMapper()).serialize("", transaction);
             producer.send(new ProducerRecord<>("transactions", new String(serialize)));
         }

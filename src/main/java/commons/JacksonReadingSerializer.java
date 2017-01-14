@@ -7,6 +7,7 @@ import org.apache.kafka.common.serialization.Serializer;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
 
 public class JacksonReadingSerializer implements Closeable, AutoCloseable, Serializer<Transaction>, Deserializer<Transaction> {
@@ -56,17 +57,19 @@ public class JacksonReadingSerializer implements Closeable, AutoCloseable, Seria
     public static class SerializationHelper {
         public String merchantId;
         public int amount;
+        public Date transactedAt;
 
-        public static SerializationHelper from(Transaction reading) {
+        public static SerializationHelper from(Transaction transaction) {
             SerializationHelper helper = new SerializationHelper();
-            helper.merchantId = reading.getMerchantName();
-            helper.amount = reading.getAmount();
+            helper.merchantId = transaction.getMerchantName();
+            helper.transactedAt = transaction.getTransactedAt();
+            helper.amount = transaction.getAmount();
 
             return helper;
         }
 
         public Transaction to() {
-            return new Transaction(merchantId, amount);
+            return new Transaction(merchantId, transactedAt, amount);
         }
     }
 }
