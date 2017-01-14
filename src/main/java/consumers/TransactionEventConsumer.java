@@ -2,6 +2,7 @@ package consumers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import commons.DataStore;
 import commons.JacksonReadingSerializer;
 import commons.Transaction;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -26,14 +27,13 @@ public class TransactionEventConsumer {
         consumer.subscribe(Arrays.asList("transactions"));
         DataStore dataStore = new DataStore();
         while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(100);
+            ConsumerRecords<String, String> records = consumer.poll(100); // read
             for (ConsumerRecord<String, String> record : records) {
                 Transaction transaction = new JacksonReadingSerializer(new ObjectMapper())
                         .deserialize("", record.value().getBytes());
                 System.out.printf("merchantId = %s, amount = %s\n", transaction.getMerchantName(), transaction.getAmount());
-                dataStore.addTransaction(transaction);
-                new OrdersIncreasedCashbackStrategy(transaction.getMerchantName()).perform();
-                dataStore.updateMerchantCashback(transaction.getMerchantName(), 10);
+                dataStore.addTransaction(transaction); // Add transactions
+                new HighValueTransactionStrategy(transaction).perform(); // Rules
             }
         }
     }

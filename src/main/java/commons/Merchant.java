@@ -20,7 +20,7 @@ public class Merchant {
     @Property
     private String name;
     @Property
-    private float cashbackPercentage;
+    private double cashbackPercentage;
     @Reference
     private List<Transaction> transactions;
 
@@ -40,11 +40,11 @@ public class Merchant {
         this.name = name;
     }
 
-    public float getCashbackPercentage() {
+    public double getCashbackPercentage() {
         return cashbackPercentage;
     }
 
-    public void setCashbackPercentage(float cashbackPercentage) {
+    public void setCashbackPercentage(double cashbackPercentage) {
         this.cashbackPercentage = cashbackPercentage;
     }
 

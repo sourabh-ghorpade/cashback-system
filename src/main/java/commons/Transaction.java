@@ -8,13 +8,16 @@ import org.mongodb.morphia.annotations.Property;
 import java.util.Date;
 
 @Entity("payments_transactions")
-public class Transaction  {
-    public Transaction(){}
-    public Transaction(String merchantName, Date transactedAt, int amount){
+public class Transaction {
+    public Transaction() {
+    }
+
+    public Transaction(String merchantName, Date transactedAt, int amount) {
         this.merchantName = merchantName;
         this.transactedAt = transactedAt;
         this.amount = amount;
     }
+
     @Id
     private ObjectId id;
 

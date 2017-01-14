@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class SeedData {
     public static void main(String args[]) {
-        List<commons.Merchant> merchants = Arrays.asList(new commons.Merchant("Supermans Juice Counter", 0),
-                new commons.Merchant("Batmans Juice Counter", 0));
+        List<commons.Merchant> merchants = Arrays.asList(new commons.Merchant("Supermans Juice Counter", 10),
+                new commons.Merchant("Batmans Juice Counter", 10));
         DatastoreSingleton.getInstance().save(merchants);
     }
 }
